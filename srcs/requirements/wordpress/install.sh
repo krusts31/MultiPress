@@ -31,6 +31,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	chown -R nginx:nginx /var/www/html/
 	find /var/www/html/ -type d -exec chmod 755 {} \;
 	find /var/www/html/ -type f -exec chmod 644 {} \;
+	mv /tmp/woocommerce-gutenberg-products-block/ wp-content/plugins
 fi
 
 

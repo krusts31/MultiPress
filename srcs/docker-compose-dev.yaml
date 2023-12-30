@@ -37,6 +37,7 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+      target: dev
     container_name: wordpress
     depends_on:
       mariadb:

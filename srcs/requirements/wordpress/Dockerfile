@@ -41,3 +41,11 @@ COPY healthcheck.sh /tmp/healthcheck.sh
 ENTRYPOINT ["tini", "--"]
 
 CMD sh /tmp/install.sh
+
+FROM base as dev
+
+COPY woocommerce-gutenberg-products-block/  /tmp/woocommerce-gutenberg-products-block/
+
+COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
+
+CMD sh /tmp/install.sh
