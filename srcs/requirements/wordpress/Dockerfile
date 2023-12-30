@@ -1,3 +1,7 @@
+ARG NODE_VERSION=20.10.0
+
+FROM node:${NODE_VERSION}-alpine AS node
+
 FROM alpine:edge as base
 
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
@@ -44,8 +48,22 @@ CMD sh /tmp/install.sh
 
 FROM base as dev
 
+RUN apk add --no-cache php82-simplexml\
+	php82-xmlwriter\
+	php82-tokenizer
+
+RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+
 COPY woocommerce-gutenberg-products-block/  /tmp/woocommerce-gutenberg-products-block/
+COPY woocommerce/  /tmp/woocommerce/
 
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
-CMD sh /tmp/install.sh
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
+COPY install-dev.sh /tmp/install-dev.sh
+
+CMD sh /tmp/install-dev.sh
