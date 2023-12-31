@@ -1,6 +1,3 @@
-[submodule "srcs/requirements/wordpress/woocommerce-gutenberg-products-block"]
-	path = srcs/requirements/wordpress/woocommerce-gutenberg-products-block
-	url = https://github.com/woocommerce/woocommerce-gutenberg-products-block.git
 [submodule "srcs/requirements/wordpress/woocommerce"]
 	path = srcs/requirements/wordpress/woocommerce
 	url = https://github.com/woocommerce/woocommerce.git
