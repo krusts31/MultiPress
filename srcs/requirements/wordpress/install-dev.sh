@@ -31,4 +31,17 @@ fi
 mv /tmp/woocommerce-gutenberg-products-block/ wp-content/plugins
 mv /tmp/woocommerce/ wp-content/plugins
 
+cd wp-contect/plugins/woocommerce
+pnpm install
+pnpm build
+cd -
+
+cd wp-contect/plugins/woocommerce-gutenberg-products-bloc
+
+npm install
+composer install
+npm build
+
+cd -
+
 exec /usr/sbin/php-fpm82 -F -R

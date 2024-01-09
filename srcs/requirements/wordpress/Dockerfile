@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.10.0
+ARG NODE_VERSION=16.20.0
 
 FROM node:${NODE_VERSION}-alpine AS node
 
@@ -49,10 +49,10 @@ CMD sh /tmp/install.sh
 FROM base as dev
 
 RUN apk add --no-cache php82-simplexml\
+	bash\
 	php82-xmlwriter\
-	php82-tokenizer
-
-RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+	php82-tokenizer\
+	php82-ctype
 
 COPY woocommerce-gutenberg-products-block/  /tmp/woocommerce-gutenberg-products-block/
 COPY woocommerce/  /tmp/woocommerce/
@@ -63,6 +63,8 @@ COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
+
+RUN npm install -g pnpm
 
 COPY install-dev.sh /tmp/install-dev.sh
 
