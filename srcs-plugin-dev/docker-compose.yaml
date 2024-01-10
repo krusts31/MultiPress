@@ -13,8 +13,6 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-      wordpress:
-        condition: service_healthy
     networks:
       - dome-net
     ports:
@@ -32,39 +30,6 @@ services:
     environment:
       WORDPRESS_URL:             ${WORDPRESS_URL}
 
-  wordpress:
-    restart: on-failure
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-      target: dev
-    container_name: wordpress
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    hostname: wordpress
-    volumes:
-      - vol_wordpress:/var/www/html/:delegated
-    networks:
-      - dome-net
-    environment:
-      WORDPRESS_URL:             ${WORDPRESS_URL}
-      WORDPRESS_TITLE:           ${WORDPRESS_TITLE}
-      WORDPRESS_ADMIN:           ${WORDPRESS_ADMIN}
-      WORDPRESS_ADMIN_PASSWORD:  ${WORDPRESS_ADMIN_PASSWORD}
-      WORDPRESS_ADMIN_EMAIL:     ${WORDPRESS_ADMIN_EMAIL}
-      WORDPRESS_DATABASE_NAME:   ${WORDPRESS_DATABASE_NAME}
-      WORDPRESS_USER:            ${WORDPRESS_USER}
-      WORDPRESS_USER_EMAIL:      ${WORDPRESS_USER_EMAIL}
-      WORDPRESS_USER_ROLE:       ${WORDPRESS_USER_ROLE}
-      WORDPRESS_USER_PASSWORD:   ${WORDPRESS_USER_PASSWORD}
-      MARIADB_USER:              ${MARIADB_USER}
-      MARIADB_USER_PASSWORD:     ${MARIADB_USER_PASSWORD}
-      MARIADB_HOST_NAME:         ${MARIADB_HOST_NAME}
-    healthcheck:
-      test: ["CMD", "/tmp/healthcheck.sh"]
-      interval: 5s
-      timeout: 5s
       retries: 5
 
   mariadb:
