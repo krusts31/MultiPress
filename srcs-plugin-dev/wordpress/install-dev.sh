@@ -18,6 +18,10 @@ apt install nodejs npm -y
 
 #install nvm
 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 nvm install $NODE_VERSION
 nvm use $NODE_VERSION
 nvm alias default $NODE_VERSION
@@ -26,11 +30,23 @@ nvm alias default $NODE_VERSION
 npm install -g pnpm
 
 #install wp
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 
 wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-/usr/sbin/adduser  --disabled-password --gecos "" nginx
+USERNAME="nginx"
+
+# Check if the user already exists
+if id "$USERNAME" &>/dev/null; then
+    echo "User $USERNAME already exists. No action taken."
+else
+    # Add the user if they don't exist
+    # Use 'useradd' command with desired options
+    /usr/sbin/adduser --disabled-password --gecos "" "$USERNAME"
+    echo "User $USERNAME has been added."
+
+    # Set or change the user's password (optional)
+    # passwd "$USERNAME"
+fi
 
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/bin/wp
