@@ -1,9 +1,31 @@
 #!/bin/sh
+#####################################
+#--->		MARIDB		<---#
+#####################################
+MARIADB_HOST_NAME=0.0.0.0
+MARIADB_USER=user_mariadb
+MARIADB_USER_PASSWORD=user_mariadb_password
+#####################################
+#--->		WORDPRESS	<---#
+#####################################
+WORDPRESS_URL=olgrounds.dev
+WORDPRESS_TITLE=olgrounds
+WORDPRESS_DATABASE_NAME=wordpress
+WORDPRESS_ADMIN=wordpress_admin
+WORDPRESS_ADMIN_PASSWORD=wordpress_admin_password
+WORDPRESS_ADMIN_EMAIL=akrusts@olgrounds.dev
+WORDPRESS_USER_ROLE=author
+WORDPRESS_USER=user
+WORDPRESS_USER_EMAIL=user@gmail.com
+WORDPRESS_USER_PASSWORD=user_password
+
 set -ex
 NODE_VERSION=16.20.0
 
+cp ./www.conf /tmp/www.conf
+
 #install composer
-apt install curl php-cli php-mbstring git unzip -y
+apt install curl php-cli php-mbstring git unzip php-mysqli -y 
 
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 HASH=`curl -sS https://composer.github.io/installer.sig`
@@ -55,8 +77,6 @@ mkdir -p /var/www/html
 
 cd /var/www/html
 
-mv /tmp/www.conf /etc/php82/php-fpm.d/www.conf
-
 # Check for required environment variables
 for var in WORDPRESS_DATABASE_NAME MARIADB_USER MARIADB_USER_PASSWORD MARIADB_HOST_NAME WORDPRESS_TITLE WORDPRESS_ADMIN WORDPRESS_ADMIN_PASSWORD WORDPRESS_ADMIN_EMAIL WORDPRESS_USER WORDPRESS_USER_EMAIL WORDPRESS_USER_ROLE WORDPRESS_USER_PASSWORD WORDPRESS_URL; do
 	eval "value=\$$var"
@@ -77,9 +97,9 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp plugin update --all --allow-root
 	sed -i "37s/.*/define( 'WP_SITEURL', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
 	sed -i "40s/.*/define( 'WP_HOME', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
-	wp package install git@github.com:wp-cli/doctor-command.git
+	wp package install git@github.com:wp-cli/doctor-command.git --allow-root
 
-	wp option update permalink_structure '/%postname%/'
+	wp option update permalink_structure '/%postname%/' --allow-root
 	mkdir /var/www/html/ wp-content/upgrade
 	chown -R nginx:nginx /var/www/html/
 	find /var/www/html/ -type d -exec chmod 755 {} \;
@@ -92,4 +112,7 @@ cd wp-contect/plugins/woocommerce
 pnpm install
 pnpm build
 
-exec /usr/sbin/php-fpm82 -F -R
+mv /tmp/www.conf /etc/php82/php-fpm.d/www.conf
+
+systemctl start php-fpm.service 
+systemctl enable php-fpm.service 
