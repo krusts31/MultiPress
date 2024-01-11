@@ -1,56 +1,56 @@
-#!/bin/bash
+#! /bin/sh
+#
+# Author: Bert Van Vreckem <bert.vanvreckem@gmail.com>
+#
+# A non-interactive replacement for mysql_secure_installation
+#
+# Tested on CentOS 6, CentOS 7, Ubuntu 12.04 LTS (Precise Pangolin), Ubuntu
+# 14.04 LTS (Trusty Tahr).
 WORDPRESS_DATABASE_NAME=wordpress
 MARIADB_USER=user_mariadb
 MARIADB_USER_PASSWORD=user_mariadb_password
 MARIADB_ROOT_PASSWORD=rootPasswordThisIs
+apt install mariadb-server -y
 
-apt-get update && apt-get upgrade -y
-
-# Install MariaDB
-apt-get install -y mariadb-server mariadb-client
-
-# Check if /run/mysqld directory exists, create if it doesn't
-if [ ! -d /run/mysqld ]; then
-    echo "Setting up MariaDB"
-    mkdir -p /run/mysqld
-    chown -R mysql:mysql /run/mysqld
-    chown -R mysql:mysql /var/lib/mysql
-
-    # Initialize MariaDB database
-    mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-
-    # Create initial SQL commands to secure MariaDB and set up Wordpress database
-    cat << EOF > /tmp/init.sql
-USE mysql;
-FLUSH PRIVILEGES;
-
-DELETE FROM mysql.user WHERE User='';
-DROP DATABASE test;
-DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-
-ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD';
-
-CREATE DATABASE $WORDPRESS_DATABASE_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER '$MARIADB_USER'@'%' IDENTIFIED by '$MARIADB_USER_PASSWORD';
-GRANT ALL PRIVILEGES ON $WORDPRESS_DATABASE_NAME.* TO '$MARIADB_USER'@'%';
-FLUSH PRIVILEGES;
-EOF
-
-    # Use the initial SQL file to set up the database
-    mariadb --user=mysql --bootstrap < /tmp/init.sql
-    rm /tmp/init.sql
-
-    # Configure MariaDB to listen on all interfaces
-    sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
-    sed -i '/skip-networking/s/^#//g' /etc/mysql/mariadb.conf.d/50-server.cnf
-fi
-
-echo "MariaDB setup complete. Starting MariaDB server..."
-
-# Start MariaDB server
 systemctl start mariadb
 systemctl enable mariadb
+set -o errexit # abort on nonzero exitstatus
+set -o nounset # abort on unbound variable
 
-echo "MariaDB server started."
+#{{{ Functions
 
+# Predicate that returns exit status 0 if the database root password
+# is set, a nonzero exit status otherwise.
+is_mysql_root_password_set() {
+  ! mysqladmin --user=root status > /dev/null 2>&1
+}
+
+# Predicate that returns exit status 0 if the mysql(1) command is available,
+# nonzero exit status otherwise.
+is_mysql_command_available() {
+  which mysql > /dev/null 2>&1
+}
+
+
+if ! is_mysql_command_available; then
+  echo "The MySQL/MariaDB client mysql(1) is not installed."
+  exit 1
+fi
+
+if is_mysql_root_password_set; then
+  echo "Database root password already set"
+  exit 0
+fi
+mysql --user=root <<_EOF_
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+FLUSH PRIVILEGES;
+
+CREATE DATABASE ${WORDPRESS_DATABASE_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER ${MARIADB_USER}@'%' IDENTIFIED by '${MARIADB_USER_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${WORDPRESS_DATABASE_NAME}.* TO '${MARIADB_USER}'@'%';
+FLUSH PRIVILEGES;
+_EOF_
