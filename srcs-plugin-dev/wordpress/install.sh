@@ -25,7 +25,7 @@ NODE_VERSION=16.20.0
 cp wordpress/www.conf /tmp/www.conf
 
 #install composer
-apt install curl php-cli php-mbstring git unzip php-mysqli -y 
+apt install curl php-cli php-mbstring git unzip php-mysqli php-xml php-curl  php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip phpunit -y 
 
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 HASH=`curl -sS https://composer.github.io/installer.sig`
