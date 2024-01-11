@@ -22,7 +22,7 @@ WORDPRESS_USER_PASSWORD=user_password
 set -ex
 NODE_VERSION=16.20.0
 
-cp ./www.conf /tmp/www.conf
+cp wordpress/www.conf /tmp/www.conf
 
 #install composer
 apt install curl php-cli php-mbstring git unzip php-mysqli -y 
@@ -100,7 +100,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp package install git@github.com:wp-cli/doctor-command.git --allow-root
 
 	wp option update permalink_structure '/%postname%/' --allow-root
-	mkdir /var/www/html/ wp-content/upgrade
+	mkdir -p /var/www/html/wp-content/upgrade
 	chown -R nginx:nginx /var/www/html/
 	find /var/www/html/ -type d -exec chmod 755 {} \;
 	find /var/www/html/ -type f -exec chmod 644 {} \;
