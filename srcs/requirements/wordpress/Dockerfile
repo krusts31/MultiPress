@@ -1,7 +1,3 @@
-ARG NODE_VERSION=16.20.0
-
-FROM node:${NODE_VERSION}-alpine AS node
-
 FROM alpine:edge as base
 
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
@@ -38,34 +34,9 @@ RUN chmod +x wp-cli.phar && \
 WORKDIR /var/www/html
 
 COPY www.conf /etc/php82/php-fpm.d/www.conf
-#todo editd file upload size
 COPY install.sh /tmp/install.sh
 COPY healthcheck.sh /tmp/healthcheck.sh
 
 ENTRYPOINT ["tini", "--"]
 
 CMD sh /tmp/install.sh
-
-FROM base as dev
-
-RUN apk add --no-cache php82-simplexml\
-	bash\
-	php82-xmlwriter\
-	php82-tokenizer\
-	php82-ctype
-
-COPY woocommerce-gutenberg-products-block/  /tmp/woocommerce-gutenberg-products-block/
-COPY woocommerce/  /tmp/woocommerce/
-
-COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
-
-COPY --from=node /usr/lib /usr/lib
-COPY --from=node /usr/local/lib /usr/local/lib
-COPY --from=node /usr/local/include /usr/local/include
-COPY --from=node /usr/local/bin /usr/local/bin
-
-RUN npm install -g pnpm
-
-COPY install-dev.sh /tmp/install-dev.sh
-
-CMD sh /tmp/install-dev.sh

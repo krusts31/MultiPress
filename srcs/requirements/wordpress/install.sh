@@ -20,8 +20,8 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp plugin install "WP Super Cache" --allow-root
 	wp plugin activate "wp-super-cache" --allow-root
 	wp plugin install woocommerce --activate
-	#wp config set WP_SITEWORDPRESS_URL "https://$WORDPRESS_URL/" --type=constant
-	#wp config set WP_HOME "https://$WORDPRESS_URL/" --type=constant
+	wp config set WP_SITEWORDPRESS_URL "https://$WORDPRESS_URL/" --type=constant
+	wp config set WP_HOME "https://$WORDPRESS_URL/" --type=constant
 	sed -i "37s/.*/define( 'WP_SITEURL', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
 	sed -i "40s/.*/define( 'WP_HOME', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
 	wp package install git@github.com:wp-cli/doctor-command.git

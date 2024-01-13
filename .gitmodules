@@ -1,3 +1,0 @@
-[submodule "srcs/requirements/wordpress/woocommerce"]
-	path = srcs/requirements/wordpress/woocommerce
-	url = https://github.com/woocommerce/woocommerce.git
