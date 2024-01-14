@@ -3,6 +3,8 @@ FROM alpine:edge as base
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories &&\
 	apk update && apk upgrade && apk add --no-cache\
 	php82\
+	php82-xmlwriter\
+	php82-ctype\
 	php82-tokenizer\
 	php82-phar\
 	php82-openssl\
@@ -23,7 +25,10 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposi
 	php82-iconv\
 	php82-intl\
 	mariadb-client\
+	subversion\
+	composer\
 	git\
+	phpunit\
 	openssh-client\
 	tini
 	
@@ -44,3 +49,10 @@ COPY healthcheck.sh /tmp/healthcheck.sh
 ENTRYPOINT ["tini", "--"]
 
 CMD sh /tmp/install.sh
+
+#FROM base as dev
+
+#RUN apk add php82-ctype
+#php82-tokenizer\ #todo move to dev
+#php82-xmlwriter
+#php82-ctype#move to dev\
