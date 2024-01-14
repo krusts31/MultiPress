@@ -14,7 +14,8 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp config create --dbname=$WORDPRESS_DATABASE_NAME --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PASSWORD --dbhost=$MARIADB_HOST_NAME --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 	wp core install --allow-root --url=$WORDPRESS_URL  --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL
 	wp user create $WORDPRESS_USER $WORDPRESS_USER_EMAIL --role=$WORDPRESS_USER_ROLE --user_pass=$WORDPRESS_USER_PASSWORD --allow-root 
-	wp plugin delete $(wp plugin list --status=inactive --field=name --allow-root) --allow-root 
+	wp plugin delete akismet --allow-root 
+	wp plugin delete hello --allow-root 
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
 	wp plugin install woocommerce --activate --allow-root
@@ -31,6 +32,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	cd ./wp-content/plugins/multipress
 	bash bin/install-wp-tests.sh wordpress_test root $MARIADB_ROOT_PASSWORD $MARIADB_HOST_NAME 6.4.2
 	composer install
+	cd -
 	echo "WP installation done"
 fi
 
