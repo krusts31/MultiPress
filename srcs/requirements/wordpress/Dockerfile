@@ -28,6 +28,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposi
 	subversion\
 	composer\
 	git\
+	bash\
 	phpunit\
 	openssh-client\
 	tini
