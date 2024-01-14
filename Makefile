@@ -1,6 +1,6 @@
 dev:
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh localhost
-	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev up --build -d
+	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev up --build
 
 prod:
 	sudo bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev www.olgrounds.dev
@@ -12,6 +12,7 @@ prod:
 
 down:
 	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev -v down
+	docker volume rm srcs_vol_mariadb srcs_vol_wordpress
 
 copy:
 	#TODO make a copy of the databse

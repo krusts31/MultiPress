@@ -17,20 +17,18 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp plugin delete $(wp plugin list --status=inactive --field=name --allow-root) --allow-root 
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
-	wp plugin install "WP Super Cache" --allow-root
-	wp plugin activate "wp-super-cache" --allow-root
-	wp plugin install woocommerce --activate
+	wp plugin install woocommerce --activate --allow-root
 	wp config set WP_SITEWORDPRESS_URL "https://$WORDPRESS_URL/" --type=constant
 	wp config set WP_HOME "https://$WORDPRESS_URL/" --type=constant
-	sed -i "37s/.*/define( 'WP_SITEURL', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
-	sed -i "40s/.*/define( 'WP_HOME', 'https:\/\/$WORDPRESS_URL\/');/" ./wp-config.php
-	wp package install git@github.com:wp-cli/doctor-command.git
 
-	wp option update permalink_structure '/%postname%/'
-	mkdir /var/www/html/ wp-content/upgrade
+	wp package install wp-cli/doctor-command:@stable
+
+	wp option update permalink_structure '/%postname%/' --allow-root
+	mkdir -p wp-content/upgrade
 	chown -R nginx:nginx /var/www/html/
 	find /var/www/html/ -type d -exec chmod 755 {} \;
 	find /var/www/html/ -type f -exec chmod 644 {} \;
+	echo "WP installation done"
 fi
 
 exec /usr/sbin/php-fpm82 -F -R

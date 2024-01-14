@@ -1,34 +1,38 @@
 FROM alpine:edge as base
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-	apk update && apk upgrade && apk add --no-cache \
-	php82 \
-	php82-phar \
-	php82-openssl \
-	php82-curl \
-	php82-dom \
-	php82-exif \
-	php82-fileinfo \
-	php82-sodium \
-	php82-mbstring \
-	php82-mysqli \
-	php82-xml \
-	php82-zip \
-	php82-cgi \
-	php82-pecl-imagick \
-	php82-fpm \
-	php82-session \
-	php82-gd \
-	php82-iconv \
-	php82-intl \
-	mariadb-client \
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories &&\
+	apk update && apk upgrade && apk add --no-cache\
+	php82\
+	php82-tokenizer\
+	php82-phar\
+	php82-openssl\
+	php82-curl\
+	php82-dom\
+	php82-exif\
+	php82-fileinfo\
+	php82-sodium\
+	php82-mbstring\
+	php82-mysqli\
+	php82-xml\
+	php82-zip\
+	php82-cgi\
+	php82-pecl-imagick\
+	php82-fpm\
+	php82-session\
+	php82-gd\
+	php82-iconv\
+	php82-intl\
+	mariadb-client\
+	git\
+	openssh-client\
 	tini
 	
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-RUN adduser -S nginx &&	addgroup -S nginx
+RUN adduser -S nginx &&\
+	addgroup -S nginx
 
-RUN chmod +x wp-cli.phar && \
+RUN chmod +x wp-cli.phar &&\
 	mv wp-cli.phar /usr/bin/wp
 
 WORKDIR /var/www/html

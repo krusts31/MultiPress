@@ -44,6 +44,7 @@ services:
     hostname: wordpress
     volumes:
       - vol_wordpress:/var/www/html/:delegated
+      - ./requirements/wordpress/multipress:/var/www/html/wp-content/plugins/multipress
     networks:
       - dome-net
     environment:
