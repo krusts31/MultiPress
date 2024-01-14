@@ -60,6 +60,7 @@ services:
       WORDPRESS_USER_PASSWORD:   ${WORDPRESS_USER_PASSWORD}
       MARIADB_USER:              ${MARIADB_USER}
       MARIADB_USER_PASSWORD:     ${MARIADB_USER_PASSWORD}
+      MARIADB_ROOT_PASSWORD:     ${MARIADB_ROOT_PASSWORD}
       MARIADB_HOST_NAME:         ${MARIADB_HOST_NAME}
     healthcheck:
       test: ["CMD", "/tmp/healthcheck.sh"]

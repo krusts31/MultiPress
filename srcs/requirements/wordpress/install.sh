@@ -28,6 +28,9 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	chown -R nginx:nginx /var/www/html/
 	find /var/www/html/ -type d -exec chmod 755 {} \;
 	find /var/www/html/ -type f -exec chmod 644 {} \;
+	cd ./wp-content/plugins/multipress
+	bash bin/install-wp-tests.sh wordpress_test root $MARIADB_ROOT_PASSWORD $MARIADB_HOST_NAME 6.4.2
+	composer install
 	echo "WP installation done"
 fi
 
