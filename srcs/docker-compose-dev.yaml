@@ -44,6 +44,7 @@ services:
     hostname: wordpress
     volumes:
       - vol_wordpress:/var/www/html/:delegated
+      - ./requirements/wordpress/multipress:/var/www/html/wp-content/plugins/multipress
     networks:
       - dome-net
     environment:
@@ -59,6 +60,7 @@ services:
       WORDPRESS_USER_PASSWORD:   ${WORDPRESS_USER_PASSWORD}
       MARIADB_USER:              ${MARIADB_USER}
       MARIADB_USER_PASSWORD:     ${MARIADB_USER_PASSWORD}
+      MARIADB_ROOT_PASSWORD:     ${MARIADB_ROOT_PASSWORD}
       MARIADB_HOST_NAME:         ${MARIADB_HOST_NAME}
     healthcheck:
       test: ["CMD", "/tmp/healthcheck.sh"]
