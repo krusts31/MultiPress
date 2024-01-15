@@ -35,7 +35,7 @@ RUN chmod +x wp-cli.phar &&\
 WORKDIR /var/www/html
 
 COPY www.conf /etc/php82/php-fpm.d/www.conf
-COPY healthcheck.sh /tmp/healthcheck.sh
+COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
 ENTRYPOINT ["tini", "--"]
 
@@ -62,8 +62,8 @@ COPY core-wordpress-install.sh /tmp/core-wordpress-install.sh
 
 CMD sh /tmp/core-wordpress-install.sh
 
-FROM base as multi-site-wordpress-core
+FROM base as multi-site-dev
 
-COPY multi-site-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
+COPY init-scripts/multi-site-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
 
 CMD sh /tmp/multi-site-wordpress-install.sh

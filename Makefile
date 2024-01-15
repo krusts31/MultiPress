@@ -3,7 +3,7 @@ dev:
 	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev up --build
 
 multi:
-	bash ./srcs/requirements/certbot/init-letsencrypt.sh localhost
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com
 	docker compose -f srcs/docker-compose-multi-site-wordpress.yaml --env-file srcs/.env-dev up --build
 
 prod:

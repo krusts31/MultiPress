@@ -8,7 +8,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-      target: dev
+      target: multi-site-dev
     hostname: nginx
     depends_on:
       mariadb:
@@ -37,7 +37,7 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-      target: multi-site-wordpress-core 
+      target: multi-site-dev
     container_name: wordpress
     depends_on:
       mariadb:

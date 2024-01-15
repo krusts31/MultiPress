@@ -1,4 +1,4 @@
-FROM alpine:3.18 as base
+FROM alpine:latest as base
 
 RUN apk update &&\
 	apk upgrade &&\
@@ -9,18 +9,25 @@ RUN mkdir -p /run/nginx
 
 COPY healthcheck.sh /tmp/healthcheck.sh
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
-FROM base as dev
-
-COPY dev.conf /etc/nginx/http.d/dev.conf
-
-FROM base as prod
+FROM base as singe-site-dev
 
 COPY prod.conf /etc/nginx/http.d/prod.conf
 
-FROM base as multi-site
+FROM base as multi-site-dev
+
+#RUN mkdir -p /etc/nginx/global
+
+COPY conf/wordpress-multi-site-dev.conf /etc/nginx/http.d/wordpress-multi-site-dev.conf
+#COPY conf/restrictions.conf /etc/nginx/http.d/restrictions.conf
+
+FROM base as singe-site-prod
+
+COPY prod.conf /etc/nginx/http.d/prod.conf
+
+FROM base as multi-site-prod
 
 COPY prod.conf /etc/nginx/http.d/prod.conf
