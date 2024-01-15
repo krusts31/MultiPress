@@ -2,6 +2,10 @@ dev:
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh localhost
 	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev up --build
 
+multi:
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh localhost
+	docker compose -f srcs/docker-compose-multi-site-wordpress.yaml --env-file srcs/.env-dev up --build
+
 prod:
 	sudo bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev www.olgrounds.dev
 	docker compose -f srcs/docker-compose-prod.yaml --env-file srcs/.env-prod up --build -d

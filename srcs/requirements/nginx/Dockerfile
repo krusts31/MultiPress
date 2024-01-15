@@ -20,3 +20,7 @@ COPY dev.conf /etc/nginx/http.d/dev.conf
 FROM base as prod
 
 COPY prod.conf /etc/nginx/http.d/prod.conf
+
+FROM base as multi-site
+
+COPY prod.conf /etc/nginx/http.d/prod.conf

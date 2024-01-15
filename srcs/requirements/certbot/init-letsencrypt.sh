@@ -34,4 +34,3 @@ for domain in "${domains[@]}"; do
     -out "$path/fullchain.pem" \
     -subj "/CN=$domain"
 done
-
