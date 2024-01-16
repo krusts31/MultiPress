@@ -3,6 +3,7 @@ FROM alpine:edge as base
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories &&\
 	apk update && apk upgrade && apk add --no-cache\
 	php82\
+	php82-ctype\
 	php82-phar\
 	php82-openssl\
 	php82-curl\
@@ -44,7 +45,6 @@ FROM base as plugin-dev
 RUN apk add --no-cahce php82-ctype\
 	php82-tokenizer\
 	php82-xmlwriter\
-	php82-ctype\
 	subversion\
 	composer\
 	git\
