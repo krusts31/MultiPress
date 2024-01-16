@@ -21,21 +21,21 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
 	wp plugin install woocommerce --activate --allow-root
-#	wp config set WP_SITEWORDPRESS_URL "https://$WORDPRESS_URL/" --type=constant
-#	wp config set WP_HOME "https://$WORDPRESS_URL/" --type=constant
-#
-#	#this is for the dev not sure if I need this on the prodoction version
-#	wp package install wp-cli/doctor-command:@stable
-#
-#	wp option update permalink_structure '/%postname%/' --allow-root
-#
+
+	wp site create --slug=en
+	wp site create --slug=lt
+	wp site create --slug=ee
+
+	wp package install wp-cli/doctor-command:@stable
+	wp option update permalink_structure '/%postname%/' --allow-root
+
 	mkdir -p wp-content/upgrade
 	chown -R nginx:nginx /var/www/html/
-#
+
 	find /var/www/html/ -type d -exec chmod 755 {} \;
 	find /var/www/html/ -type f -exec chmod 644 {} \;
-#
+
 	echo "WP installation done"
 fi
-#
+
 exec /usr/sbin/php-fpm82 -F -R
