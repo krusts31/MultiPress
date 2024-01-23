@@ -18,28 +18,26 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp user create $WORDPRESS_USER $WORDPRESS_USER_EMAIL --role=$WORDPRESS_USER_ROLE --user_pass=$WORDPRESS_USER_PASSWORD --allow-root 
 #	wp plugin delete akismet --allow-root 
 	wp plugin delete hello --allow-root 
+
+	wp language core install de_DE lt_LT et lv --allow-root
+
+	wp site create --slug=en --allow-root
+	wp site create --slug=de --allow-root
+	wp site create --slug=lt --allow-root
+	wp site create --slug=lv --allow-root
+	wp site create --slug=et --allow-root
+	
+	wp site switch-language de_DE --url=de.bio113-dev.com --allow-root
+	wp site switch-language et --url=et.bio113-dev.com --allow-root
+	wp site switch-language lt_LT --url=lt.bio113-dev.com --allow-root
+	wp site switch-language lv --url=lv.bio113-dev.com --allow-root
+	wp site switch-language en_US --url=en.bio113-dev.com --allow-root
+
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
 
-	wp plugin install woocommerce --allow-root --activate-network
 	wp plugin install loco-translate --allow-root --activate-network
-
-
-	wp site create --slug=en --allow-root
-	wp site create --slug=lt --allow-root
-	wp site create --slug=et --allow-root
-
-	wp language core install lt_LT et lv --allow-root
-
-	#wp site switch-language et --url=et.bio113-dev.com --allow-root
-	#wp site switch-language lt_LT --url=lt.bio113-dev.com --allow-root
-	#wp site switch-language lv --url=bio113-dev.com --allow-root
-	#wp site switch-language en_US --url=en.bio113-dev.com --allow-root
-
-	wp option update WPLANG et --url=et.bio113-dev.com --allow-root
-	wp option update WPLANG lt_LT --url=lt.bio113-dev.com --allow-root
-	wp option update WPLANG lv --url=bio113-dev.com --allow-root
-	wp option update WPLANG en_US --url=en.bio113-dev.com --allow-root
+	wp plugin install woocommerce --allow-root --activate-network
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
