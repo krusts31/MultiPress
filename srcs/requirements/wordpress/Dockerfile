@@ -41,9 +41,9 @@ COPY ./php82-conf/www.conf /etc/php82/php-fpm.d/www.conf
 COPY ./php82-conf/php.ini /etc/php82/php.ini
 
 #COPY ./lang/woocommerce-de_DE.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-de_DE.po
-#COPY ./lang/woocommerce-et.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-et.po
-#COPY ./lang/woocommerce-lt_LT.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
-#COPY ./lang/woocommerce-lv.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lv.po
+COPY ./lang/woocommerce-et.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-et.po
+COPY ./lang/woocommerce-lt_LT.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
+COPY ./lang/woocommerce-lv.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lv.po
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
