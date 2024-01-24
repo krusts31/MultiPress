@@ -44,6 +44,7 @@ COPY ./php82-conf/php.ini /etc/php82/php.ini
 COPY ./lang/woocommerce-et.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-et.po
 COPY ./lang/woocommerce-lt_LT.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
 COPY ./lang/woocommerce-lv.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lv.po
+COPY ./bildes /var/www/html/wp-content/pictures/
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
