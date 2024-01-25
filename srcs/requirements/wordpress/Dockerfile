@@ -2,6 +2,8 @@ FROM alpine:edge as base
 
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories &&\
 	apk update && apk upgrade && apk add --no-cache\
+	python3\
+	py3-pip\
 	php82\
 	php82-tokenizer\
 	php82-xmlwriter\
@@ -27,6 +29,9 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposi
 	mariadb-client\
 	tini
 	
+
+RUN ln -sf python3 /usr/bin/python
+
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 RUN adduser -S nginx &&\
@@ -45,6 +50,8 @@ COPY ./lang/woocommerce-et.po /var/www/html/wp-content/languages/loco/plugins/wo
 COPY ./lang/woocommerce-lt_LT.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
 COPY ./lang/woocommerce-lv.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lv.po
 COPY ./bildes /var/www/html/wp-content/pictures/
+COPY ./merged.csv /tmp/merged.csv
+COPY ./test.py /tmp/test.py
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
