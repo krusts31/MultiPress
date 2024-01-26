@@ -3,10 +3,10 @@ import subprocess
 import json
 
 # Replace with your CSV file name
-csv_file = "/tmp/merged.csv"
+csv_file = "/tmp/lv.csv"
 
 # Replace with the names of the columns you want to use
-columns_to_print = ["name_lv", "description_lv", "small_text_lv", "Price", "picture", "meta_description_lv"]
+columns_to_print = ["name_lv", "description_lv", "small_text_lv", "price", "picture", "meta_description_lv"]
 
 site = "lv.bio113-dev.com"
 

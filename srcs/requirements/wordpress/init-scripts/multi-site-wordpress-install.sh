@@ -42,6 +42,8 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
+	wp config set WP_DEBUG true --allow-root
+	wp config set WP_MEMORY_LIMIT 256M --allow-root
 
 	mkdir -p wp-content/upgrade
 	chown -R nginx:nginx /var/www/html/
@@ -52,4 +54,6 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	echo "WP installation done"
 fi
 
+wp config set WP_DEBUG true --allow-root
+wp config set WP_MEMORY_LIMIT 256M --allow-root
 exec /usr/sbin/php-fpm82 -F -R
