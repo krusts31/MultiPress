@@ -10,7 +10,7 @@ for var in WORDPRESS_DATABASE_NAME MARIADB_USER MARIADB_USER_PASSWORD MARIADB_HO
 	fi
 done
 
-if [ ! -f "/var/www/html/wp-config.php" ]; then
+if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	wp core download --allow-root
 
 	wp config create --dbname=$WORDPRESS_DATABASE_NAME --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PASSWORD --dbhost=$MARIADB_HOST_NAME --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
@@ -34,26 +34,36 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	wp site switch-language lv --url=lv.bio113-dev.com --allow-root
 	wp site switch-language en_US --url=en.bio113-dev.com --allow-root
 
+	wp --url=lv.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=et.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=lt.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=de.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=en.bio113-dev.com user meta update admin locale en_US --allow-root
+
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
 
 	wp plugin install loco-translate --allow-root --activate-network
 	wp plugin install woocommerce --allow-root --activate-network
+	wp plugin install translatepress-multilingual --allow-root --activate-network
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
-	wp config set WP_DEBUG true --allow-root
-	wp config set WP_MEMORY_LIMIT 256M --allow-root
+	wp config set WP_DEBUG true --raw --allow-root
+	wp config set WP_MEMORY_LIMIT 256M --raw --allow-root
+
 
 	mkdir -p wp-content/upgrade
-	chown -R nginx:nginx /var/www/html/
+	chown -R nginx:nginx /var/www/wordpress/
 
-	find /var/www/html/ -type d -exec chmod 755 {} \;
-	find /var/www/html/ -type f -exec chmod 644 {} \;
+	find /var/www/wordpress/ -type d -exec chmod 755 {} \;
+	find /var/www/wordpress/ -type f -exec chmod 644 {} \;
 
 	echo "WP installation done"
 fi
 
-wp config set WP_DEBUG true --allow-root
-wp config set WP_MEMORY_LIMIT 256M --allow-root
+#wp option add my_option --format=json < /tmp/settings.json
+
+wp config set WP_DEBUG true --raw --allow-root
+wp config set WP_MEMORY_LIMIT 512M  --allow-root
 exec /usr/sbin/php-fpm82 -F -R

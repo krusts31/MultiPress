@@ -5,6 +5,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposi
 	python3\
 	py3-pip\
 	php82\
+	php82-simplexml\
 	php82-tokenizer\
 	php82-xmlwriter\
 	php82-ctype\
@@ -40,18 +41,16 @@ RUN adduser -S nginx &&\
 RUN chmod +x wp-cli.phar &&\
 	mv wp-cli.phar /usr/bin/wp
 
-WORKDIR /var/www/html
+WORKDIR /var/www/wordpress
 
 COPY ./php82-conf/www.conf /etc/php82/php-fpm.d/www.conf
 COPY ./php82-conf/php.ini /etc/php82/php.ini
 
-#COPY ./lang/woocommerce-de_DE.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-de_DE.po
-COPY ./lang/woocommerce-et.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-et.po
-COPY ./lang/woocommerce-lt_LT.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
-COPY ./lang/woocommerce-lv.po /var/www/html/wp-content/languages/loco/plugins/woocommerce-lv.po
-COPY ./bildes /var/www/html/wp-content/pictures/
-COPY ./merged.csv /tmp/merged.csv
-COPY ./test.py /tmp/test.py
+COPY ./lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
+COPY ./lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
+COPY ./lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
+COPY ./csv/lv_striped_2.csv /tmp/lv_striped_2.csv
+COPY ./create_products.py /tmp/create_products.py
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
@@ -83,4 +82,5 @@ FROM base as multi-site-dev
 
 COPY init-scripts/multi-site-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
 
+COPY ./settings.json /tmp/settings.json
 CMD sh /tmp/multi-site-wordpress-install.sh

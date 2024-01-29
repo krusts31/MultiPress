@@ -22,7 +22,8 @@ FROM base as multi-site-dev
 #RUN mkdir -p /etc/nginx/global
 
 COPY conf/wordpress-multi-site-dev.conf /etc/nginx/http.d/wordpress-multi-site-dev.conf
-#COPY conf/restrictions.conf /etc/nginx/http.d/restrictions.conf
+RUN rm /etc/nginx/http.d/default.conf
+COPY /pictures/ /var/www/pictures/
 
 FROM base as singe-site-prod
 

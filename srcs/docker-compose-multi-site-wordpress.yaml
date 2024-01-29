@@ -21,7 +21,7 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - vol_wordpress:/var/www/html/:delegated
+      - vol_wordpress:/var/www/wordpress/:delegated
       - ./requirements/certbot/conf:/etc/letsencrypt #this is for the config files
       - ./requirements/certbot/www:/var/www/certbot  #this is for the lets encrypt challange
     healthcheck:
@@ -44,7 +44,7 @@ services:
         condition: service_healthy
     hostname: wordpress
     volumes:
-      - vol_wordpress:/var/www/html/:delegated
+      - vol_wordpress:/var/www/wordpress/:delegated
     networks:
       - dome-net
     environment:
