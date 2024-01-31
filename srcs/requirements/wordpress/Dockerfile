@@ -49,7 +49,7 @@ COPY ./php82-conf/php.ini /etc/php82/php.ini
 COPY ./lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
 COPY ./lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
 COPY ./lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
-COPY ./csv/lv_striped_2.csv /tmp/lv_striped_2.csv
+COPY ./csv/lv_striped_2.csv /tmp/lv.csv
 COPY ./create_products.py /tmp/create_products.py
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
