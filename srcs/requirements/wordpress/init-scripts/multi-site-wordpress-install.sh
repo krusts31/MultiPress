@@ -66,4 +66,15 @@ fi
 
 wp config set WP_DEBUG true --raw --allow-root
 wp config set WP_MEMORY_LIMIT 512M  --allow-root
+
+#cd /tmp
+
+#python create_products.py lv
+#python create_products.py lt
+#python create_products.py et
+#python create_products.py en
+#python create_products.py de
+
+#cd -
+
 exec /usr/sbin/php-fpm82 -F -R
