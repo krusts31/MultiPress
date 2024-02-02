@@ -59,6 +59,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	find /var/www/wordpress/ -type d -exec chmod 755 {} \;
 	find /var/www/wordpress/ -type f -exec chmod 644 {} \;
 
+	mv /tmp/functins.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
 	echo "WP installation done"
 fi
 

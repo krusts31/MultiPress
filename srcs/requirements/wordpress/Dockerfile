@@ -51,6 +51,7 @@ COPY ./csv/et.csv /tmp/et.csv
 COPY ./csv/en.csv /tmp/en.csv
 COPY ./csv/de.csv /tmp/de.csv
 COPY ./create_products.php /tmp/create_products.php
+COPY ./functions.php /tmp/functions.php
 
 COPY health-checks/healthcheck.sh /tmp/healthcheck.sh
 
