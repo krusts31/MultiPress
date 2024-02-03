@@ -59,23 +59,21 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	find /var/www/wordpress/ -type d -exec chmod 755 {} \;
 	find /var/www/wordpress/ -type f -exec chmod 644 {} \;
 
-	mv /tmp/functins.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
+	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
 	echo "WP installation done"
+
+	#cd /tmp
+
+	#php create_products.php lv
+	#php create_products.php lt
+	#php create_products.php et
+	#php create_products.php en
+	#php create_products.php de
+
+	#cd -
 fi
 
-#wp option add my_option --format=json < /tmp/settings.json
-
 wp config set WP_DEBUG true --raw --allow-root
-wp config set WP_MEMORY_LIMIT 512M  --allow-root
-
-#cd /tmp
-
-#python create_products.py lv
-#python create_products.py lt
-#python create_products.py et
-#python create_products.py en
-#python create_products.py de
-
-#cd -
+wp config set WP_MEMORY_LIMIT 1024M  --allow-root
 
 exec /usr/sbin/php-fpm82 -F -R
