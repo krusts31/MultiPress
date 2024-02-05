@@ -65,7 +65,7 @@ services:
     healthcheck:
       test: ["CMD", "/tmp/healthcheck.sh"]
       interval: 5s
-      timeout: 5s
+      timeout: 50s
       retries: 5
 
   mariadb:
