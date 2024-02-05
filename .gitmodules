@@ -1,0 +1,3 @@
+[submodule "srcs/requirements/wordpress/omniva-woocommerce"]
+	path = srcs/requirements/wordpress/omniva-woocommerce
+	url = https://github.com/mijora/omniva-woocommerce.git
