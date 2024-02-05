@@ -76,4 +76,4 @@ fi
 wp config set WP_DEBUG true --raw --allow-root
 wp config set WP_MEMORY_LIMIT 1024M  --allow-root
 
-exec /usr/sbin/php-fpm82 -F -R
+exec /usr/sbin/php-fpm83 -F -R

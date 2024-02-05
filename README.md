@@ -11,3 +11,6 @@ make dev
 make multi-dev
 #will bring up wordpress multi site instalation
 ```
+
+If you are deploying to the cloud then make sure to set staging to 0 if you get
+a ssl ERROR. This will make certbot to create reall certificates.

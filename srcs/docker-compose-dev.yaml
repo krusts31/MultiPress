@@ -8,7 +8,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-      target: dev
+      target: single-site-dev
     hostname: nginx
     depends_on:
       mariadb:
@@ -21,9 +21,10 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - vol_wordpress:/var/www/html/:delegated
+      - vol_wordpress:/var/www/wordpress/:delegated
       - ./requirements/certbot/conf:/etc/letsencrypt #this is for the config files
       - ./requirements/certbot/www:/var/www/certbot  #this is for the lets encrypt challange
+      - ./requirements/nginx/pictures:/var/www/pictures
     healthcheck:
       test: ["CMD", "/tmp/healthcheck.sh"]
       interval: 5s
@@ -37,14 +38,14 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+      target: single-site-dev
     container_name: wordpress
     depends_on:
       mariadb:
         condition: service_healthy
     hostname: wordpress
     volumes:
-      - vol_wordpress:/var/www/html/:delegated
-      - ./requirements/wordpress/multipress:/var/www/html/wp-content/plugins/multipress
+      - vol_wordpress:/var/www/wordpress/:delegated
     networks:
       - dome-net
     environment:
