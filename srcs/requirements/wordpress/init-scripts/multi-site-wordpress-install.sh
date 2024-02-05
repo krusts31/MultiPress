@@ -28,17 +28,17 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	wp site create --slug=lv --allow-root
 	wp site create --slug=et --allow-root
 	
-	wp site switch-language de_DE --url=de.bio113-dev.com --allow-root
-	wp site switch-language et --url=et.bio113-dev.com --allow-root
-	wp site switch-language lt_LT --url=lt.bio113-dev.com --allow-root
-	wp site switch-language lv --url=lv.bio113-dev.com --allow-root
-	wp site switch-language en_US --url=en.bio113-dev.com --allow-root
+	wp site switch-language de_DE --url=de.olgrounds.dev --allow-root
+	wp site switch-language et --url=et.olgrounds.dev --allow-root
+	wp site switch-language lt_LT --url=lt.olgrounds.dev --allow-root
+	wp site switch-language lv --url=lv.olgrounds.dev --allow-root
+	wp site switch-language en_US --url=en.olgrounds.dev --allow-root
 
-	wp --url=lv.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=et.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=lt.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=de.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=en.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=lv.olgrounds.dev user meta update admin locale en_US --allow-root
+	wp --url=et.olgrounds.dev user meta update admin locale en_US --allow-root
+	wp --url=lt.olgrounds.dev user meta update admin locale en_US --allow-root
+	wp --url=de.olgrounds.dev user meta update admin locale en_US --allow-root
+	wp --url=en.olgrounds.dev user meta update admin locale en_US --allow-root
 
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
