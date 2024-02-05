@@ -1,12 +1,14 @@
-dev:
+
+single-dev:
+	#create ssh script for local dev
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com
 	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev up --build
 
-prod:
-	sudo bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev www.olgrounds.dev
+single-prod:
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev
 	docker compose -f srcs/docker-compose-prod.yaml --env-file srcs/.env-prod up --build -d
 	bash ./srcs/tools/wait.sh
-	sudo bash ./srcs/requirements/certbot/post-letsencrypt.sh olgrounds.dev www.olgrounds.dev
+	bash ./srcs/requirements/certbot/post-letsencrypt.sh olgrounds.dev
 	#bash ./srcs/cert/bottest_renew.sh TODO
 	bash ./srcs/tools/reload_nginx.sh
 

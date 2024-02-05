@@ -2,9 +2,12 @@
 
 $lang = $argv[1];
 
-$csvFile = "/tmp/" . $lang . "_categoires.csv";
+$csvFile = "/tmp/categoires_" . $lang . ".csv";
+
+$columns = ["id", "name", "parent", "description", "image"];
 
 if (($handle = fopen($csvFile, "r")) !== FALSE) {
+
     $header = fgetcsv($handle);
 
     $columnsIndex = array_flip($header);
@@ -15,28 +18,18 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
             $values[$column] = $row[$columnsIndex[$column]];
         }
 
-        $images = json_encode([["src" => "https://" . "bio113.com/th/340x300_6/" . trim($values["picture"], '/')]]);
-
         $ret = array();
 
-        $command_with_image = "wp --url={$site} wc product create " .
+        #$images = json_encode([["src" => "https://" . "bio113.com/th/340x300_6/" . trim($values["picture"], '/')]]);
+
+        $command_with_image = "wp --url={$site} wc category create " .
                    "--path=/var/www/wordpress " .
-                   "--name='" . $values["name_" . $lang] . "' " .
-                   "--type=simple " .
-                   "--description='" . $values["description_" . $lang] . "' " .
-                   "--short_description='" . $values["small_text_" . $lang] . "' " .
-                   "--regular_price=" . $values["price"] . " " .
-                   "--images='" . $images . "' " .
+                   "--name=" . $values["name"] .
+                   "--description=" . $values["description"] .
+                   "--parent=" .  $values["parents"] .
+                   "--images=" . $images .
                    "--user=admin 2>&1";
 
-        $command_without_image = "wp --url={$site} wc product create " .
-                   "--path=/var/www/wordpress " .
-                   "--name='" . $values["name_" . $lang] . "' " .
-                   "--type=simple " .
-                   "--description='" . $values["description_" . $lang] . "' " .
-                   "--short_description='" . $values["small_text_" . $lang] . "' " .
-                   "--regular_price=" . $values["price"] . " " .
-                   "--user=admin 2>&1";
 
         exec($command_with_image, $ret, $out);
         if (str_contains($ret[0], 'error 7')) {
