@@ -84,6 +84,12 @@ CMD sh /tmp/core-wordpress-install.sh
 
 FROM base as multi-site-dev
 
-COPY --chown=nginx:nginx init-scripts/multi-site-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
+COPY --chown=nginx:nginx init-scripts/multi-site-dev-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
+
+CMD sh /tmp/multi-site-wordpress-install.sh
+
+FROM base as multi-site-prod
+
+COPY --chown=nginx:nginx init-scripts/multi-site-prod-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
 
 CMD sh /tmp/multi-site-wordpress-install.sh
