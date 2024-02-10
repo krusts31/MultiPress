@@ -1,4 +1,3 @@
-
 single-dev:
 	#create ssh script for local dev
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com
@@ -40,3 +39,6 @@ fclean:
 
 save:
 	bash ./srcs/tools/database_backup.sh
+
+import:
+	bash ./srcs/tools/import_database.sh mini.sql
