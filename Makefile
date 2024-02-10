@@ -41,4 +41,4 @@ save:
 	bash ./srcs/tools/database_backup.sh
 
 import:
-	bash ./srcs/tools/import_database.sh mini.sql
+	bash ./srcs/tools/import_database.sh big.sql

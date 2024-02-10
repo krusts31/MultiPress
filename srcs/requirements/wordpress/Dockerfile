@@ -52,6 +52,7 @@ COPY --chown=nginx:nginx ./csv/categories/ /tmp/categories/
 COPY --chown=nginx:nginx ./omniva-woocommerce/ /tmp/omniva-woocommerce/
 
 COPY --chown=nginx:nginx ./create_products.php /tmp/create_products.php
+COPY --chown=nginx:nginx ./create_categories.php /tmp/create_categories.php
 COPY --chown=nginx:nginx ./functions.php /tmp/functions.php
 
 COPY --chown=nginx:nginx ./sql /tmp/sql

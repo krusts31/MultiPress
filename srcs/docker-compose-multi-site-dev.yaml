@@ -24,6 +24,7 @@ services:
       - vol_wordpress:/var/www/wordpress/:delegated
       - ./requirements/certbot/conf:/etc/letsencrypt #this is for the config files
       - ./requirements/certbot/www:/var/www/certbot  #this is for the lets encrypt challange
+      - ./requirements/nginx/pictures:/var/www/pictures
     healthcheck:
       test: ["CMD", "/tmp/healthcheck.sh"]
       interval: 5s

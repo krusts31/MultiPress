@@ -64,12 +64,6 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 	#cd /tmp
 
-	#php create_products.php lv
-	#php create_products.php lt
-	#php create_products.php et
-	#php create_products.php en
-	#php create_products.php de
-
 	#cd -
 fi
 
