@@ -7,28 +7,22 @@ RUN apk update &&\
 
 RUN mkdir -p /run/nginx
 
-COPY healthcheck.sh /tmp/healthcheck.sh
+RUN rm /etc/nginx/http.d/default.conf
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=nginx:nginx healthcheck.sh /tmp/healthcheck.sh
+
+COPY --chown=nginx:nginx conf/nginx.conf /etc/nginx/nginx.conf
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
-FROM base as singe-site-dev
+FROM base as single-site-dev
 
-COPY prod.conf /etc/nginx/http.d/prod.conf
+COPY --chown=nginx:nginx conf/prod.conf /etc/nginx/http.d/prod.conf
 
 FROM base as multi-site-dev
 
-#RUN mkdir -p /etc/nginx/global
-
-COPY conf/wordpress-multi-site-dev.conf /etc/nginx/http.d/wordpress-multi-site-dev.conf
-RUN rm /etc/nginx/http.d/default.conf
-COPY /pictures/ /var/www/pictures/
-
-FROM base as singe-site-prod
-
-COPY prod.conf /etc/nginx/http.d/prod.conf
+COPY --chown=nginx:nginx conf/wordpress-multi-site-dev.conf /etc/nginx/http.d/wordpress-multi-site-dev.conf
 
 FROM base as multi-site-prod
 
-COPY prod.conf /etc/nginx/http.d/prod.conf
+COPY --chown=nginx:nginx conf/wordpress-multi-site-prod.conf /etc/nginx/http.d/wordpress-multi-site-prod.conf
