@@ -29,7 +29,7 @@ down:
 	docker volume rm srcs_vol_mariadb srcs_vol_wordpress
 
 down-multi:
-	docker compose -f srcs/docker-compose-multi-site-wordpress.yaml --env-file srcs/.env-dev -v down
+	docker compose -f srcs/docker-compose-multi-site-dev.yaml --env-file srcs/.env-dev -v down
 	docker volume rm srcs_vol_mariadb srcs_vol_wordpress
 
 fclean:
