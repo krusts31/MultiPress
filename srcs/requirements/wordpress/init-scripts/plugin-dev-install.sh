@@ -35,6 +35,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 	find /var/www/html/ -type f -exec chmod 644 {} \;
 
 	#this is for the dev
+	#multi press can be replaced with plugin name
 	cd ./wp-content/plugins/multipress
 	bash bin/install-wp-tests.sh wordpress_test root $MARIADB_ROOT_PASSWORD $MARIADB_HOST_NAME 6.4.2
 	composer install
