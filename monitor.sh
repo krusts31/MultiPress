@@ -3,8 +3,9 @@
 # Your Docker container names
 CONTAINERS=("srcs-nginx" "srcs-mariadb" "srcs-wordpress")  # Add your container names here
 
-# Slack webhook URL
-WEBHOOK_URL="https://discordapp.com/api/webhooks/1167852969522376804/1cfvD4hYRK2UNxAL9m7lKViaGGbKx6CVZes2EJEgjfCn6tUKZcNp_gl4abLkFNnX9qvt"
+#TODO remove this from git its probably a secret! :D
+##https://discordapp.com/api/webhooks/SECRET/SECRET
+#WEBHOOK_URL=""
 
 # Loop through each container to check its status
 for CONTAINER in "${CONTAINERS[@]}"; do
