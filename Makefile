@@ -41,4 +41,4 @@ save:
 	bash ./srcs/tools/database_backup.sh
 
 import:
-	bash ./srcs/tools/import_database.sh big.sql
+	bash ./srcs/tools/import_database.sh 24.02.11-12-49-09.sql
