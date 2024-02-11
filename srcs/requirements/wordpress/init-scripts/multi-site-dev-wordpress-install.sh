@@ -22,11 +22,11 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 	wp language core install de_DE lt_LT et lv --allow-root
 
-	wp site create --slug=en --allow-root
-	wp site create --slug=de --allow-root
-	wp site create --slug=lt --allow-root
-	wp site create --slug=lv --allow-root
-	wp site create --slug=et --allow-root
+	wp site create --slug=en --title=BIO113 --allow-root
+	wp site create --slug=de --title=BIO113 --allow-root
+	wp site create --slug=lt --title=BIO113 --allow-root
+	wp site create --slug=lv --title=BIO113 --allow-root
+	wp site create --slug=et --title=BIO113 --allow-root
 	
 	wp site switch-language de_DE --url=de.bio113-dev.com --allow-root
 	wp site switch-language et --url=et.bio113-dev.com --allow-root
@@ -49,8 +49,6 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
-	wp config set WP_DEBUG true --raw --allow-root
-	wp config set WP_MEMORY_LIMIT 256M --raw --allow-root
 
 
 	mkdir -p wp-content/upgrade
@@ -61,10 +59,6 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
 	echo "WP installation done"
-
-	#cd /tmp
-
-	#cd -
 fi
 
 wp config set WP_DEBUG true --raw --allow-root
