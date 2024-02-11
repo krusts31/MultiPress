@@ -43,9 +43,7 @@ WORKDIR /var/www/wordpress
 COPY --chown=nginx:nginx ./php83-conf/www.conf /etc/php83/php-fpm.d/www.conf
 COPY --chown=nginx:nginx ./php83-conf/php.ini /etc/php83/php.ini
 
-#COPY ./lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
-#COPY ./lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
-#COPY ./lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
+COPY --chown=nginx:nginx ./lang/ /tmp/lang/
 
 COPY --chown=nginx:nginx ./csv/products/ /tmp/products/
 COPY --chown=nginx:nginx ./csv/categories/ /tmp/categories/

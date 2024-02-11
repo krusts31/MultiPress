@@ -55,12 +55,18 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 
 	mkdir -p wp-content/upgrade
-	chown -R nginx:nginx /var/www/wordpress/
+	mkdir -p /var/www/wordpress/wp-content/languages/loco/plugins/
 
+	mv /tmp/lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
+	mv /tmp/lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
+	mv /tmp/lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
+
+	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
+
+	chown -R nginx:nginx /var/www/wordpress/
 	find /var/www/wordpress/ -type d -exec chmod 755 {} \;
 	find /var/www/wordpress/ -type f -exec chmod 644 {} \;
 
-	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
 	echo "WP installation done"
 fi
 
