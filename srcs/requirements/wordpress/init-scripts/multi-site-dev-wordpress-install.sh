@@ -46,6 +46,9 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	wp plugin install loco-translate --allow-root --activate-network
 	wp plugin install woocommerce --allow-root --activate-network
 	wp plugin install translatepress-multilingual --allow-root --activate-network
+	wp plugin install woocommerce-gateway-stripe --allow-root --activate-network
+	wp plugin install woocommerce-paypal-payments --allow-root --activate-network
+
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
