@@ -1,10 +1,10 @@
 <?php
 
-// Assuming $argv[1] contains the language code
 $lang = $argv[1];
+
 $csvFile = "/tmp/" . $lang . ".csv";
 
-$columnsToPrint = ["name_" . $lang, "description_" . $lang, "small_text_" . $lang, "price", "picture", "meta_description_" . $lang];
+$columnsToPrint = ["name", "description", "small_text", "price", "picture", "meta_description", "on_sale", "sale_price"];
 
 $site = $lang . ".bio113-dev.com";
 
@@ -18,6 +18,7 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
             $values[$column] = $row[$columnsIndex[$column]];
         }
 
+        #remote image url
         $images = json_encode([["src" => "https://" . "bio113.com/th/340x300_6/" . trim($values["picture"], '/')]]);
 
         $ret = array();
@@ -29,6 +30,8 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
                    "--description='" . $values["description_" . $lang] . "' " .
                    "--short_description='" . $values["small_text_" . $lang] . "' " .
                    "--regular_price=" . $values["price"] . " " .
+                   "--sale_price=" . $values["sale_price"] . " " .
+                   "--on_sale=" . $values["on_sale"] . " " .
                    "--images='" . $images . "' " .
                    "--user=admin 2>&1";
 
@@ -39,9 +42,12 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
                    "--description='" . $values["description_" . $lang] . "' " .
                    "--short_description='" . $values["small_text_" . $lang] . "' " .
                    "--regular_price=" . $values["price"] . " " .
+                   "--sale_price=" . $values["sale_price"] . " " .
+                   "--on_sale=" . $values["on_sale"] . " " .
                    "--user=admin 2>&1";
 
         exec($command_with_image, $ret, $out);
+
         if (str_contains($ret[0], 'error 7')) {
           echo "ERROR 7\nStaring to loop\n";
           $ret = array();
