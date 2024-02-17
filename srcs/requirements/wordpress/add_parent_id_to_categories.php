@@ -40,7 +40,7 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
 
         exec($command_with_image, $ret, $out);
         echo $ret[0] . "\n";
-        $newCsvRow = [$ret[0], trim($values["Name"], '"'), $values["Description"], $values["Parent"], $values["Image"], $values["ID"];
+        $newCsvRow = [$ret[0], trim($values["Name"], '"'), $values["Description"], $values["Parent"], $values["Image"], $values["ID"]];
 
         fputcsv($newCsvFile, $newCsvRow);
     }

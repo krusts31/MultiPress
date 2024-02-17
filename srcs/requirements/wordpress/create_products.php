@@ -29,7 +29,7 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
                    "--type=simple " .
                    "--description='" . $values["description"] . "' " .
                    "--short_description='" . $values["small_text"] . "' " .
-                   "--category_id='" . $values["small_text"] . "' " .
+                   "--category_id='" . $values["category_id"] . "' " .
                    "--regular_price=" . $values["price"] . " " .
                    "--sale_price=" . $values["sale_price"] . " " .
                    "--on_sale=" . $values["on_sale"] . " " .
@@ -42,6 +42,7 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
                    "--type=simple " .
                    "--description='" . $values["description"] . "' " .
                    "--short_description='" . $values["small_text"] . "' " .
+                   "--category_id='" . $values["category_id"] . "' " .
                    "--regular_price=" . $values["price"] . " " .
                    "--sale_price=" . $values["sale_price"] . " " .
                    "--on_sale=" . $values["on_sale"] . " " .
