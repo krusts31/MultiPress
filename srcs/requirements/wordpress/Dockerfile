@@ -50,7 +50,7 @@ COPY --chown=nginx:nginx ./csv/categories/ /tmp/categories/
 COPY --chown=nginx:nginx ./omniva-woocommerce/ /tmp/omniva-woocommerce/
 
 COPY --chown=nginx:nginx ./create_products.php /tmp/create_products.php
-COPY --chown=nginx:nginx ./create_categories.php /tmp/create_categories.php
+COPY --chown=nginx:nginx ./create_initial_categoires.php /tmp/create_initial_categoires.php
 COPY --chown=nginx:nginx ./functions.php /tmp/functions.php
 
 COPY --chown=nginx:nginx ./sql /tmp/sql
@@ -82,6 +82,8 @@ COPY --chown=nginx:nginx init-scripts/core-wordpress-install.sh /tmp/core-wordpr
 CMD sh /tmp/core-wordpress-install.sh
 
 FROM base as multi-site-dev
+
+RUN apk add vim --no-cache
 
 COPY --chown=nginx:nginx init-scripts/multi-site-dev-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
 

@@ -25,10 +25,11 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
 
         $command_with_image = "wp --url={$site} wc product create " .
                    "--path=/var/www/wordpress " .
-                   "--name='" . $values["name_" . $lang] . "' " .
+                   "--name='" . $values["name"] . "' " .
                    "--type=simple " .
-                   "--description='" . $values["description_" . $lang] . "' " .
-                   "--short_description='" . $values["small_text_" . $lang] . "' " .
+                   "--description='" . $values["description"] . "' " .
+                   "--short_description='" . $values["small_text"] . "' " .
+                   "--category_id='" . $values["small_text"] . "' " .
                    "--regular_price=" . $values["price"] . " " .
                    "--sale_price=" . $values["sale_price"] . " " .
                    "--on_sale=" . $values["on_sale"] . " " .
@@ -37,10 +38,10 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
 
         $command_without_image = "wp --url={$site} wc product create " .
                    "--path=/var/www/wordpress " .
-                   "--name='" . $values["name_" . $lang] . "' " .
+                   "--name='" . $values["name"] . "' " .
                    "--type=simple " .
-                   "--description='" . $values["description_" . $lang] . "' " .
-                   "--short_description='" . $values["small_text_" . $lang] . "' " .
+                   "--description='" . $values["description"] . "' " .
+                   "--short_description='" . $values["small_text"] . "' " .
                    "--regular_price=" . $values["price"] . " " .
                    "--sale_price=" . $values["sale_price"] . " " .
                    "--on_sale=" . $values["on_sale"] . " " .
