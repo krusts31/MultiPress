@@ -51,6 +51,8 @@ COPY --chown=nginx:nginx ./omniva-woocommerce/ /tmp/omniva-woocommerce/
 
 COPY --chown=nginx:nginx ./create_products.php /tmp/create_products.php
 COPY --chown=nginx:nginx ./create_initial_categoires.php /tmp/create_initial_categoires.php
+COPY --chown=nginx:nginx ./replace_old_ids_in_products.php /tmp/replace_old_ids_in_products.php
+COPY --chown=nginx:nginx ./update_cat_id.php /tmp/update_cat_id.php
 COPY --chown=nginx:nginx ./functions.php /tmp/functions.php
 
 COPY --chown=nginx:nginx ./sql /tmp/sql
