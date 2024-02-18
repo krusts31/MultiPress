@@ -28,17 +28,17 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	wp site create --slug=lv --title=BIO113 --allow-root
 	wp site create --slug=et --title=BIO113 --allow-root
 	
-	wp site switch-language de_DE --url=de.bio113-dev.com --allow-root
-	wp site switch-language et --url=et.bio113-dev.com --allow-root
-	wp site switch-language lt_LT --url=lt.bio113-dev.com --allow-root
-	wp site switch-language lv --url=lv.bio113-dev.com --allow-root
-	wp site switch-language en_US --url=en.bio113-dev.com --allow-root
+	wp site switch-language de_DE --url=de.$WORDPRESS_URL --allow-root
+	wp site switch-language et --url=et.$WORDPRESS_URL --allow-root
+	wp site switch-language lt_LT --url=lt.$WORDPRESS_URL --allow-root
+	wp site switch-language lv --url=lv.$WORDPRESS_URL --allow-root
+	wp site switch-language en_US --url=en.$WORDPRESS_URL --allow-root
 
-	wp --url=lv.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=et.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=lt.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=de.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=en.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=lv.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=et.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=lt.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=de.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=en.$WORDPRESS_URL user meta update admin locale en_US --allow-root
 
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root

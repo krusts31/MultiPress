@@ -23,6 +23,10 @@ FROM base as multi-site-dev
 
 COPY --chown=nginx:nginx conf/wordpress-multi-site-dev.conf /etc/nginx/http.d/wordpress-multi-site-dev.conf
 
+FROM base as multi-site-staging
+
+COPY --chown=nginx:nginx conf/wordpress-multi-site-staging.conf /etc/nginx/http.d/wordpress-multi-site-staging.conf
+
 FROM base as multi-site-prod
 
 COPY --chown=nginx:nginx conf/wordpress-multi-site-prod.conf /etc/nginx/http.d/wordpress-multi-site-prod.conf

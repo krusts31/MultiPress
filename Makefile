@@ -15,6 +15,10 @@ multi-dev:
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com lt.bio113-dev.com et.bio113-dev.com lv.bio113-dev.com de.bio113-dev.com files.bio113-dev.com
 	docker compose -f srcs/docker-compose-multi-site-dev.yaml --env-file srcs/.env-dev up --build
 
+multi-staging:
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev lt.olgrounds.dev et.olgrounds.dev lv.olgrounds.dev de.olgrounds.dev files.olgrounds.dev
+	docker compose -f srcs/docker-compose-multi-site-stage.yaml --env-file srcs/.env-dev up --build
+
 multi-prod:
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh olgrounds.dev lt.olgrounds.dev et.olgrounds.dev lv.olgrounds.dev de.olgrounds.dev files.olgrounds.dev
 	docker compose -f srcs/docker-compose-multi-site-prod.yaml --env-file srcs/.env-prod up --build -d
@@ -41,4 +45,6 @@ save:
 	bash ./srcs/tools/database_backup.sh
 
 import:
-	bash ./srcs/tools/import_database.sh 24.02.18-15.38.03.sql
+	bash ./srcs/tools/import_database.sh 24.02.18-16.21.42.sql
+stop:
+	docker stop -t 0 $(shell docker ps -q)
