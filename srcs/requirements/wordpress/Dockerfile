@@ -77,6 +77,12 @@ COPY --chown=nginx:nginx init-scripts/plugin-dev-install.sh /tmp/plugin-dev-inst
 
 CMD sh /tmp/plugin-dev-install.sh
 
+FROM base as blog-dev
+
+COPY --chown=nginx:nginx init-scripts/blog-wordpress-install.sh /tmp/blog-wordpress-install.sh
+
+CMD sh /tmp/blog-wordpress-install.sh
+
 FROM base as single-site-dev
 
 COPY --chown=nginx:nginx init-scripts/core-wordpress-install.sh /tmp/core-wordpress-install.sh

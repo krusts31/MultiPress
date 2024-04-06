@@ -1,3 +1,10 @@
+up-blog-dev:
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh blog-dev.com
+	docker compose -f srcs/docker-compose-blog-dev.yaml --env-file srcs/.env-blog-dev up --build
+
+down-blog-dev:
+	docker compose -f srcs/docker-compose-blog-dev.yaml --env-file srcs/.env-blog-dev down 
+
 single-dev:
 	#create ssh script for local dev
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com
@@ -26,7 +33,6 @@ multi-prod:
 	bash ./srcs/requirements/certbot/post-letsencrypt.sh olgrounds.dev lt.olgrounds.dev et.olgrounds.dev lv.olgrounds.dev de.olgrounds.dev files.olgrounds.dev
 	#bash ./srcs/cert/bottest_renew.sh TODO
 	bash ./srcs/tools/reload_nginx.sh
-
 
 down:
 	docker compose -f srcs/docker-compose-dev.yaml --env-file srcs/.env-dev -v down
