@@ -22,23 +22,23 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
 	wp language core install de_DE lt_LT et lv --allow-root
 
-	wp site create --slug=en --allow-root
-	wp site create --slug=de --allow-root
-	wp site create --slug=lt --allow-root
-	wp site create --slug=lv --allow-root
-	wp site create --slug=et --allow-root
+	wp site create --slug=en --title=BIO113 --allow-root
+	wp site create --slug=de --title=BIO113 --allow-root
+	wp site create --slug=lt --title=BIO113 --allow-root
+	wp site create --slug=lv --title=BIO113 --allow-root
+	wp site create --slug=et --title=BIO113 --allow-root
 	
-	wp site switch-language de_DE --url=de.bio113-dev.com --allow-root
-	wp site switch-language et --url=et.bio113-dev.com --allow-root
-	wp site switch-language lt_LT --url=lt.bio113-dev.com --allow-root
-	wp site switch-language lv --url=lv.bio113-dev.com --allow-root
-	wp site switch-language en_US --url=en.bio113-dev.com --allow-root
+	wp site switch-language de_DE --url=de.$WORDPRESS_URL --allow-root
+	wp site switch-language et --url=et.$WORDPRESS_URL --allow-root
+	wp site switch-language lt_LT --url=lt.$WORDPRESS_URL --allow-root
+	wp site switch-language lv --url=lv.$WORDPRESS_URL --allow-root
+	wp site switch-language en_US --url=en.$WORDPRESS_URL --allow-root
 
-	wp --url=lv.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=et.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=lt.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=de.bio113-dev.com user meta update admin locale en_US --allow-root
-	wp --url=en.bio113-dev.com user meta update admin locale en_US --allow-root
+	wp --url=lv.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=et.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=lt.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=de.$WORDPRESS_URL user meta update admin locale en_US --allow-root
+	wp --url=en.$WORDPRESS_URL user meta update admin locale en_US --allow-root
 
 	wp theme delete $(wp theme list --status=inactive --field=name --allow-root) --allow-root  
 	wp plugin update --all --allow-root
@@ -46,25 +46,28 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 	wp plugin install loco-translate --allow-root --activate-network
 	wp plugin install woocommerce --allow-root --activate-network
 	wp plugin install translatepress-multilingual --allow-root --activate-network
+	wp plugin install woocommerce-gateway-stripe --allow-root --activate-network
+	wp plugin install woocommerce-paypal-payments --allow-root --activate-network
+
 
 	wp package install wp-cli/doctor-command:@stable
 	wp option update permalink_structure '/%postname%/' --allow-root
-	wp config set WP_DEBUG true --raw --allow-root
-	wp config set WP_MEMORY_LIMIT 256M --raw --allow-root
 
 
 	mkdir -p wp-content/upgrade
-	chown -R nginx:nginx /var/www/wordpress/
+	mkdir -p /var/www/wordpress/wp-content/languages/loco/plugins/
 
+	mv /tmp/lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
+	mv /tmp/lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
+	mv /tmp/lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
+
+	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
+
+	chown -R nginx:nginx /var/www/wordpress/
 	find /var/www/wordpress/ -type d -exec chmod 755 {} \;
 	find /var/www/wordpress/ -type f -exec chmod 644 {} \;
 
-	mv /tmp/functions.php /var/www/wordpress/wp-content/themes/twentytwentyfour/functions.php
 	echo "WP installation done"
-
-	#cd /tmp
-
-	#cd -
 fi
 
 wp config set WP_DEBUG true --raw --allow-root

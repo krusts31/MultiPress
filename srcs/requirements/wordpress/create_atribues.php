@@ -22,7 +22,7 @@ if (($handle = fopen($csvFile, "r")) !== FALSE) {
 
         $ret = array();
 
-        $command_with_image = "wp --url={$site} wc product_cat create" .
+        $command_with_image = "wp --url={$site} wc product_attribute create" .
                    " --path=/var/www/wordpress" .
                    " --name=" . '"' . $values["name"] . '"' .
                    " --user=admin";

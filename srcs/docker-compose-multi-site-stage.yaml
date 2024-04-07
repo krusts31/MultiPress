@@ -8,7 +8,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-      target: multi-site-prod
+      target: multi-site-staging
     hostname: nginx
     depends_on:
       mariadb:

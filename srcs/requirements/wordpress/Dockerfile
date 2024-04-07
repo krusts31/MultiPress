@@ -43,16 +43,16 @@ WORKDIR /var/www/wordpress
 COPY --chown=nginx:nginx ./php83-conf/www.conf /etc/php83/php-fpm.d/www.conf
 COPY --chown=nginx:nginx ./php83-conf/php.ini /etc/php83/php.ini
 
-#COPY ./lang/woocommerce-et.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-et.po
-#COPY ./lang/woocommerce-lt_LT.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lt_LT.po
-#COPY ./lang/woocommerce-lv.po /var/www/wordpress/wp-content/languages/loco/plugins/woocommerce-lv.po
+COPY --chown=nginx:nginx ./lang/ /tmp/lang/
 
 COPY --chown=nginx:nginx ./csv/products/ /tmp/products/
 COPY --chown=nginx:nginx ./csv/categories/ /tmp/categories/
 COPY --chown=nginx:nginx ./omniva-woocommerce/ /tmp/omniva-woocommerce/
 
 COPY --chown=nginx:nginx ./create_products.php /tmp/create_products.php
-COPY --chown=nginx:nginx ./create_categories.php /tmp/create_categories.php
+COPY --chown=nginx:nginx ./create_initial_categoires.php /tmp/create_initial_categoires.php
+COPY --chown=nginx:nginx ./replace_old_ids_in_products.php /tmp/replace_old_ids_in_products.php
+COPY --chown=nginx:nginx ./update_cat_id.php /tmp/update_cat_id.php
 COPY --chown=nginx:nginx ./functions.php /tmp/functions.php
 
 COPY --chown=nginx:nginx ./sql /tmp/sql
@@ -77,6 +77,18 @@ COPY --chown=nginx:nginx init-scripts/plugin-dev-install.sh /tmp/plugin-dev-inst
 
 CMD sh /tmp/plugin-dev-install.sh
 
+FROM base as store-dev
+
+COPY --chown=nginx:nginx init-scripts/store-wordpress-install.sh /tmp/store-wordpress-install.sh
+
+CMD sh /tmp/store-wordpress-install.sh
+
+FROM base as blog-dev
+
+COPY --chown=nginx:nginx init-scripts/blog-wordpress-install.sh /tmp/blog-wordpress-install.sh
+
+CMD sh /tmp/blog-wordpress-install.sh
+
 FROM base as single-site-dev
 
 COPY --chown=nginx:nginx init-scripts/core-wordpress-install.sh /tmp/core-wordpress-install.sh
@@ -84,6 +96,8 @@ COPY --chown=nginx:nginx init-scripts/core-wordpress-install.sh /tmp/core-wordpr
 CMD sh /tmp/core-wordpress-install.sh
 
 FROM base as multi-site-dev
+
+RUN apk add vim --no-cache
 
 COPY --chown=nginx:nginx init-scripts/multi-site-dev-wordpress-install.sh /tmp/multi-site-wordpress-install.sh
 

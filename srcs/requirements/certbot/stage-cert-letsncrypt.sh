@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 domains=("$@")
 
-rsa_key_size=4096
+rsa_key_size=2048
 
 data_path="$DIR/requirements/certbot"
 email="akrusts@olgrounds.dev" # Adding a valid address is strongly recommended
