@@ -5,6 +5,14 @@ up-blog-dev:
 down-blog-dev:
 	docker compose -f srcs/docker-compose-blog-dev.yaml --env-file srcs/.env-blog-dev down 
 
+up-store-dev:
+	#create ssh script for local dev
+	bash ./srcs/requirements/certbot/init-letsencrypt.sh store-dev.com
+	docker compose -f srcs/docker-compose-store-dev.yaml --env-file srcs/.env-store-dev up --build
+
+down-store-dev:
+	docker compose -f srcs/docker-compose-store-dev.yaml --env-file srcs/.env-store-dev down
+
 single-dev:
 	#create ssh script for local dev
 	bash ./srcs/requirements/certbot/init-letsencrypt.sh bio113-dev.com

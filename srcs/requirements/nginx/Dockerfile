@@ -15,6 +15,10 @@ COPY --chown=nginx:nginx conf/nginx.conf /etc/nginx/nginx.conf
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
+FROM base as store-dev
+
+COPY --chown=nginx:nginx conf/blog.conf /etc/nginx/http.d/store.conf
+
 FROM base as blog-dev
 
 COPY --chown=nginx:nginx conf/blog.conf /etc/nginx/http.d/blog.conf

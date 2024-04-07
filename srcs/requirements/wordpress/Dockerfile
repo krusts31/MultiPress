@@ -77,6 +77,12 @@ COPY --chown=nginx:nginx init-scripts/plugin-dev-install.sh /tmp/plugin-dev-inst
 
 CMD sh /tmp/plugin-dev-install.sh
 
+FROM base as store-dev
+
+COPY --chown=nginx:nginx init-scripts/store-wordpress-install.sh /tmp/store-wordpress-install.sh
+
+CMD sh /tmp/store-wordpress-install.sh
+
 FROM base as blog-dev
 
 COPY --chown=nginx:nginx init-scripts/blog-wordpress-install.sh /tmp/blog-wordpress-install.sh
