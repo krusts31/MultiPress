@@ -7,12 +7,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 domains=("$@")
 
-rsa_key_size=4096
+rsa_key_size=2048
 
 data_path="$DIR/requirements/certbot"
 email="akrusts@olgrounds.dev" # Adding a valid address is strongly recommended
 
-staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
+staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 
 for DOMAIN in "${domains[@]}"; do
