@@ -66,7 +66,7 @@ save:
 	bash ./srcs/tools/database_backup.sh
 
 import:
-	bash ./srcs/tools/import_database.sh 24.02.18-16.21.42.sql
+	bash ./srcs/tools/import_database.sh 24.04.07-12.40.34.sql
 
 stop:
 	docker stop -t 0 $(shell docker ps -q)
